@@ -1,4 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2006-2012.
+//  Copyright Steve Gates 2013.
+//  Portions Copyright (c) Microsoft Open Technologies, Inc.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -31,6 +33,8 @@
 
 namespace boost {
 namespace debug {
+
+#ifdef BOOST_TEST_HAS_DEBUG_SUPPORT
 
 // ************************************************************************** //
 // **************  check if program is running under debugger  ************** //
@@ -74,6 +78,8 @@ bool BOOST_TEST_DECL attach_debugger( bool break_or_continue = true );
 // ************************************************************************** //
 // **************   switch on/off detect memory leaks feature  ************** //
 // ************************************************************************** //
+
+#endif
 
 void BOOST_TEST_DECL detect_memory_leaks( bool on_off, unit_test::const_string report_file = unit_test::const_string() );
 

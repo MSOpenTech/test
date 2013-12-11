@@ -1,4 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2012.
+//  Copyright Steve Gates 2013.
+//  Portions Copyright (c) Microsoft Open Technologies, Inc.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -17,6 +19,10 @@
 
 #ifdef UNDER_CE
 #error Windows CE does not support environment variables.
+#endif
+
+#ifdef BOOST_WINAPI_FAMILY
+#error Windows store and phone does not support environment variables.
 #endif
 
 // Boost.Runtime.Parameter

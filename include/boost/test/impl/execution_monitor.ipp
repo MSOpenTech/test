@@ -1,5 +1,7 @@
 //  (C) Copyright Gennadiy Rozental 2001-2012.
 //  (C) Copyright Beman Dawes and Ullrich Koethe 1995-2001.
+//  Copyright Steve Gates 2013.
+//  Portions Copyright (c) Microsoft Open Technologies, Inc.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -802,7 +804,11 @@ static void boost_execution_monitor_jumping_signal_handler( int sig, siginfo_t* 
 
 static void boost_execution_monitor_attaching_signal_handler( int sig, siginfo_t* info, void* context )
 {
-    if( !debug::attach_debugger( false ) )
+    bool successfully_attached = false;
+#ifdef BOOST_TEST_HAS_DEBUG_SUPPORT
+    successfully_attached = debug::attach_debugger( false );
+#endif
+    if( !successfully_attached )
         boost_execution_monitor_jumping_signal_handler( sig, info, context );
 
     // debugger attached; it will handle the signal
@@ -928,7 +934,8 @@ system_signal_exception::operator()( unsigned int id, _EXCEPTION_POINTERS* exps 
             return EXCEPTION_CONTINUE_SEARCH;
         }
     }
-
+    
+#ifdef BOOST_TEST_HAS_DEBUG_SUPPORT
     if( !!m_em->p_auto_start_dbg && debug::attach_debugger( false ) ) {
         m_em->p_catch_system_errors.value = false;
 #if BOOST_WORKAROUND( BOOST_MSVC, <= 1310)
@@ -936,6 +943,7 @@ system_signal_exception::operator()( unsigned int id, _EXCEPTION_POINTERS* exps 
 #endif
         return EXCEPTION_CONTINUE_EXECUTION;
     }
+#endif
 
     m_se_id = id;
     if( m_se_id == EXCEPTION_ACCESS_VIOLATION && exps->ExceptionRecord->NumberParameters == 2 ) {
@@ -1172,8 +1180,10 @@ execution_monitor::execution_monitor()
 int
 execution_monitor::execute( boost::function<int ()> const& F )
 {
+#ifdef BOOST_TEST_HAS_DEBUG_SUPPORT
     if( debug::under_debugger() )
         p_catch_system_errors.value = false;
+#endif
 
     try {
         detail::fpe_except_guard G( p_detect_fp_exceptions );

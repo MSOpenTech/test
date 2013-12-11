@@ -1,5 +1,7 @@
 //  (C) Copyright Gennadiy Rozental 2001-2012.
 //  (C) Copyright Beman Dawes 1995-2001.
+//  Copyright Steve Gates 2013.
+//  Portions Copyright (c) Microsoft Open Technologies, Inc.
 //  Distributed under the Boost Software License, Version 1.0.
 //  (See accompanying file LICENSE_1_0.txt or copy at 
 //  http://www.boost.org/LICENSE_1_0.txt)
@@ -69,7 +71,11 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
     int result = 0;
 
     try {
-        boost::unit_test::const_string p( std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" ) );
+        boost::unit_test::const_string p;
+#ifndef BOOST_WINAPI_FAMILY
+        p = std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" );
+#endif
+        
         ::boost::execution_monitor ex_mon;
 
         ex_mon.p_catch_system_errors.value = p != "no";
@@ -102,7 +108,10 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
         //  like the clutter.  Use an environment variable to avoid command
         //  line argument modifications; for use in production programs
         //  that's a no-no in some organizations.
-        ::boost::unit_test::const_string p( std::getenv( "BOOST_PRG_MON_CONFIRM" ) );
+        ::boost::unit_test::const_string p;
+#ifndef BOOST_WINAPI_FAMILY
+        p = std::getenv( "BOOST_PRG_MON_CONFIRM" );
+#endif
         if( p != "no" ) { 
             std::cerr << std::flush << "no errors detected" << std::endl; 
         }
