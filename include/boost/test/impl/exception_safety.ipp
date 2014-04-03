@@ -1,5 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2005-2012.
 //  Copyright Steve Gates 2013.
+//  Copyright Patrick Brenner 2014.
 //  Portions Copyright (c) Microsoft Open Technologies, Inc.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
@@ -148,7 +149,7 @@ private:
     unsigned    m_exec_path_counter;
     unsigned    m_break_exec_path;
     
-    bool        m_invairant_failed;
+    bool        m_invariant_failed;
     registry    m_memory_in_use;
 };
 
@@ -170,7 +171,7 @@ exception_safety_tester::exception_safety_tester( const_string test_name )
 , m_exec_path_point( 0 )
 , m_exec_path_counter( 1 )
 , m_break_exec_path( static_cast<unsigned>(-1) )
-, m_invairant_failed( false )
+, m_invariant_failed( false )
 {
     framework::register_observer( *this );
 
@@ -210,7 +211,7 @@ exception_safety_tester::next_execution_path()
 
     // check memory usage
     if( m_execution_path.size() > 0 ) {
-        bool errors_detected = m_invairant_failed || (m_memory_in_use.size() != 0);
+        bool errors_detected = m_invariant_failed || (m_memory_in_use.size() != 0);
         framework::assertion_result( errors_detected ? AR_FAILED : AR_PASSED );
 
         if( errors_detected )
@@ -221,7 +222,7 @@ exception_safety_tester::next_execution_path()
 
     m_exec_path_point           = 0;
     m_exception_point_counter   = 0;
-    m_invairant_failed          = false;
+    m_invariant_failed          = false;
     ++m_exec_path_counter;
 
     while( m_execution_path.size() > 0 ) {
@@ -379,7 +380,7 @@ void
 exception_safety_tester::assertion_result( unit_test::assertion_result ar )
 {
     if( !m_internal_activity && (ar != AR_PASSED) ) {
-        m_invairant_failed = true;
+        m_invariant_failed = true;
 
         failure_point();
     }
@@ -489,11 +490,11 @@ exception_safety_tester::report_error()
 
     wrap_stringstream formatter;
 
-    if( m_invairant_failed )
+    if( m_invariant_failed )
         formatter << "Failed invariant";
 
     if( m_memory_in_use.size() != 0 ) {
-        if( m_invairant_failed )
+        if( m_invariant_failed )
             formatter << " and ";
 
         formatter << static_cast<unsigned int>(m_memory_in_use.size()) << " memory leak";

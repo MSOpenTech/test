@@ -1,6 +1,7 @@
 //  (C) Copyright Gennadiy Rozental 2006-2012.
 //  Copyright Steve Gates 2013.
 //  Copyright George Mileka 2013.
+//  Copyright Patrick Brenner 2014.
 //  Portions Copyright (c) Microsoft Open Technologies, Inc.
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
@@ -33,7 +34,9 @@
 
 // SYSTEM API
 #  include <windows.h>
+#if !defined(BOOST_WINAPI_FAMILY) || BOOST_WINAPI_FAMILY!=WINAPI_FAMILY_PHONE_APP
 #  include <winreg.h>
+#endif
 #  include <cstdio>
 #  include <cstring>
 
