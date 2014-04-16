@@ -1,7 +1,6 @@
 //  (C) Copyright Gennadiy Rozental 2001-2012.
 //  (C) Copyright Beman Dawes and Ullrich Koethe 1995-2001.
-//  Copyright Steve Gates 2013.
-//  Portions Copyright (c) Microsoft Open Technologies, Inc.
+//  Copyright (c) Microsoft Corporation
 //  Use, modification, and distribution are subject to the
 //  Boost Software License, Version 1.0. (See accompanying file
 //  http://www.boost.org/LICENSE_1_0.txt)
