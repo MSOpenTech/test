@@ -37,7 +37,7 @@ namespace rt  = boost::runtime;
 namespace cla = rt::cla;
 
 #ifndef UNDER_CE
-#ifndef BOOST_WINAPI_FAMILY
+#ifndef BOOST_WINDOWS_RUNTIME
 #include <boost/test/utils/runtime/env/variable.hpp>
 
 namespace env = rt::env;
@@ -46,6 +46,7 @@ namespace env = rt::env;
 
 // Boost
 #include <boost/config.hpp>
+#include <boost/predef.h>
 #include <boost/test/detail/suppress_warnings.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/test/detail/enable_warnings.hpp>
@@ -247,7 +248,7 @@ retrieve_parameter( const_string parameter_name, cla::parser const& s_cla_parser
     boost::optional<T> v;
 
 #ifndef UNDER_CE
-#ifndef BOOST_WINAPI_FAMILY
+#ifndef BOOST_WINDOWS_RUNTIME
     env::get( parameter_2_env_var(parameter_name), v );
 #endif
 #endif

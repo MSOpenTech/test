@@ -17,6 +17,7 @@
 
 // Boost
 #include <boost/config.hpp> // compilers workarounds
+#include <boost/predef.h>
 #include <boost/detail/workaround.hpp>
 
 #if defined(_WIN32) && !defined(BOOST_DISABLE_WIN32) &&                  \
@@ -120,7 +121,7 @@ class type_info;
 // Used to turn on/off debugging support.
 // Under Windows Runtime (WinRT) accessing registry, creating processes, etc..
 // are not supported so turn off debugging support.
-#ifndef BOOST_WINAPI_FAMILY
+#ifndef BOOST_WINDOWS_RUNTIME
 #define BOOST_TEST_HAS_DEBUG_SUPPORT
 #endif
 

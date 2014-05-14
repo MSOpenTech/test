@@ -20,10 +20,6 @@
 #error Windows CE does not support environment variables.
 #endif
 
-#ifdef BOOST_WINAPI_FAMILY
-#error Windows store and phone does not support environment variables.
-#endif
-
 // Boost.Runtime.Parameter
 #include <boost/test/utils/runtime/config.hpp>
 #include <boost/test/utils/runtime/fwd.hpp>
@@ -36,6 +32,11 @@
 
 // Boost
 #include <boost/optional.hpp>
+#include <boost/predef.h>
+
+#ifdef BOOST_WINDOWS_RUNTIME
+#error Windows store and phone does not support environment variables.
+#endif
 
 namespace boost {
 

@@ -25,6 +25,7 @@
 // Boost
 #include <boost/cstdlib.hpp>    // for exit codes
 #include <boost/config.hpp>     // for workarounds
+#include <boost/predef.h>
 
 // STL
 #include <iostream>
@@ -71,7 +72,7 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
 
     try {
         boost::unit_test::const_string p;
-#ifndef BOOST_WINAPI_FAMILY
+#ifndef BOOST_WINDOWS_RUNTIME
         p = std::getenv( "BOOST_TEST_CATCH_SYSTEM_ERRORS" );
 #endif
         
@@ -108,7 +109,7 @@ prg_exec_monitor_main( int (*cpp_main)( int argc, char* argv[] ), int argc, char
         //  line argument modifications; for use in production programs
         //  that's a no-no in some organizations.
         ::boost::unit_test::const_string p;
-#ifndef BOOST_WINAPI_FAMILY
+#ifndef BOOST_WINDOWS_RUNTIME
         p = std::getenv( "BOOST_PRG_MON_CONFIRM" );
 #endif
         if( p != "no" ) { 
